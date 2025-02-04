@@ -1,5 +1,7 @@
-ann_path: 'artpedia/artpedia_train.json'
-captions_path: 'captions/train_captions.json'
+train_ann_path: 'artpedia/artpedia_train.json'
+train_captions_path: 'captions/train_captions.json'
+val_ann_path: 'artpedia/artpedia_val.json'
+val_captions_path: 'captions/val_captions.json'
 dataset: 'artpedia'
 captioner: 'LlavaCaptioner'  # or 'LlamaCaptioner' or 'True'
 
