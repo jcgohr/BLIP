@@ -1,11 +1,11 @@
-train_ann_path: 'artpedia/artpedia_train.json'
-train_captions_path: 'captions/train_captions.json'
+train_ann_path: '../../artpedia/artpedia_train.json'
+train_captions_path: '../../captions/train_captions.json'
 
-val_ann_path: 'artpedia/artpedia_val.json'
-val_captions_path: 'captions/val_captions.json'
+val_ann_path: '../../artpedia/artpedia_val.json'
+val_captions_path: '../../captions/val_captions.json'
 
-test_ann_path: 'artpedia/artpedia_test.json'
-test_captions_path: 'captions/test_captions.json'
+test_ann_path: '../../artpedia/artpedia_test.json'
+test_captions_path: '../../captions/test_captions.json'
 
 dataset: 'artpedia'
 captioner: 'LlavaCaptioner'  # or 'LlamaCaptioner' or 'True'
