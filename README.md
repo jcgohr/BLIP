@@ -4,6 +4,25 @@
 
 <img src="BLIP.gif" width="700">
 
+## Artpedia Fine-tuning
+To utilize our custom artpedia fine-tuning use these commands. This code assumes you are using the
+[artwork-caption-gen repo](https://github.com/jcgohr/artwork-caption-gen/tree/main) and starting in the top level directory.
+```
+cd submodules/BLIP
+chmod +x artpedia_finetune.sh
+```
+Substitute **N** with the number of gpus you have on your system.
+### Fine-tuning with artpedia visual captions
+```
+./artpedia_finetune.sh N configs/artpedia_true_config.yaml ../../blip/true
+```
+### Fine-tuning with Llava captions
+```
+./artpedia_finetune.sh N configs/artpedia_llava_config.yaml ../../blip/llava
+```
+
+The checkpoints will be stored in the top level directory.
+
 This is the PyTorch code of the <a href="https://arxiv.org/abs/2201.12086">BLIP paper</a> [[blog](https://blog.salesforceairesearch.com/blip-bootstrapping-language-image-pretraining/)]. The code has been tested on PyTorch 1.10.
 To install the dependencies, run <pre/>pip install -r requirements.txt</pre> 
 
