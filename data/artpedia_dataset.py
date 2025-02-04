@@ -4,7 +4,7 @@ import json
 from torch.utils.data import Dataset
 from PIL import Image
 
-from utils import pre_caption
+from data.utils import pre_caption
 
 def finetune_dataset_format(metadata_path:str, generated_cap_path:str, output_path:str=None):
     """
