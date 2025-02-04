@@ -9,6 +9,7 @@ from data.flickr30k_dataset import flickr30k_train, flickr30k_retrieval_eval
 from data.vqa_dataset import vqa_dataset
 from data.nlvr_dataset import nlvr_dataset
 from data.pretrain_dataset import pretrain_dataset
+from data.artpedia_dataset import artpedia_train,artpedia_eval
 from transform.randaugment import RandomAugment
 
 def create_dataset(dataset, config, min_scale=0.5):
@@ -68,6 +69,11 @@ def create_dataset(dataset, config, min_scale=0.5):
         test_dataset = nlvr_dataset(transform_test, config['image_root'], config['ann_root'],'test')     
         return train_dataset, val_dataset, test_dataset   
     
+    elif dataset=='artpedia':
+        train_dataset = artpedia_train(transform_train,config["train_ann_path"],config["train_captions_path"],config["captioner"])
+        val_dataset   = artpedia_eval(transform_test,config["val_ann_path"],config["val_captions_path"],config["captioner"])
+        test_dataset  = artpedia_eval(transform_test,config["test_ann_path"],config["test_captions_path"],config["captioner"])     
+        return train_dataset, val_dataset, test_dataset   
     
     
 def create_sampler(datasets, shuffles, num_tasks, global_rank):
