@@ -6,6 +6,17 @@ from PIL import Image
 
 from data.utils import pre_caption
 
+def get_root_path():
+    """Get the path two directories up from the current working directory."""
+    current_dir = os.getcwd()
+    root_path = os.path.dirname(os.path.dirname(current_dir))
+    return root_path
+
+def get_absolute_path(file_path):
+    """Convert relative file path to absolute path from root directory."""
+    root_path = get_root_path()
+    return os.path.join(root_path, file_path)
+
 def finetune_dataset_format(metadata_path:str, generated_cap_path:str, output_path:str=None):
     """
     A consistent dict format is required for finetuning, the following will be done:
@@ -28,7 +39,8 @@ def finetune_dataset_format(metadata_path:str, generated_cap_path:str, output_pa
         generated = json.load(f2)
     for id, sample in generated.items():
         sample["True"] = " ".join(metadata[id]["visual_sentences"])
-        sample["file_path"] = metadata[id]["file_path"]
+        # Convert the file path to absolute path from root
+        sample["file_path"] = get_absolute_path(metadata[id]["file_path"])
 
     if output_path:
         with open(output_path, "w", encoding='utf-8') as f3:
@@ -60,6 +72,7 @@ class artpedia_train(Dataset):
         img_id = list(self.img_ids.keys())[index]
         ann = self.merged_data[img_id]
         
+        # file_path is already absolute from finetune_dataset_format
         image = Image.open(ann['file_path']).convert('RGB')   
         image = self.transform(image)
         
@@ -90,6 +103,7 @@ class artpedia_eval(Dataset):
         img_id = 0
         
         for key, ann in self.merged_data.items():
+            # file_path is already absolute from finetune_dataset_format
             self.image.append(ann['file_path'])
             self.img2txt[img_id] = []
             
@@ -111,6 +125,7 @@ class artpedia_eval(Dataset):
     
     
 if __name__=="__main__":
+    # Example paths should now be relative to the root directory
     train_dataset = artpedia_train(
         transform=None,
         ann_path='artpedia/artpedia_train.json',
