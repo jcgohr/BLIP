@@ -104,7 +104,7 @@ def evaluation(model, data_loader, device, config):
         image_embed = model.vision_proj(image_feat[:,0,:])            
         image_embed = F.normalize(image_embed,dim=-1)      
         
-        image_feats.append(image_feat.cpu())
+        image_feats.append(image_feat)
         image_embeds.append(image_embed)
      
     image_feats = torch.cat(image_feats,dim=0)
