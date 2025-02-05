@@ -1,6 +1,10 @@
 from models.med import BertConfig, BertModel
 from transformers import BertTokenizer
 
+import os
+import sys
+sys.path.append(os.path.join("submodules/BLIP"))
+
 import torch
 from torch import nn
 import torch.nn.functional as F

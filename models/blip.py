@@ -8,6 +8,10 @@
 import warnings
 warnings.filterwarnings("ignore")
 
+import os
+import sys
+sys.path.append(os.path.join("submodules/BLIP"))
+
 from models.vit import VisionTransformer, interpolate_pos_embed
 from models.med import BertConfig, BertModel, BertLMHeadModel
 from transformers import BertTokenizer
