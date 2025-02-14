@@ -18,7 +18,8 @@ class BLIP_ITM(nn.Module):
                  vit = 'base',
                  vit_grad_ckpt = False,
                  vit_ckpt_layer = 0,                      
-                 embed_dim = 256,     
+                 embed_dim = 256,
+                 itc_sim=True     
                  ):
         """
         Args:
@@ -38,7 +39,10 @@ class BLIP_ITM(nn.Module):
         
         self.vision_proj = nn.Linear(vision_width, embed_dim)
         self.text_proj = nn.Linear(text_width, embed_dim)
-
+        
+        # Determine whether to return itc_sim or raw features
+        self.itc_sim=itc_sim
+        
         self.itm_head = nn.Linear(text_width, 2) 
         
         
@@ -66,6 +70,9 @@ class BLIP_ITM(nn.Module):
                                             return_dict = True, mode = 'text')                     
             image_feat = F.normalize(self.vision_proj(image_embeds[:,0,:]),dim=-1)   
             text_feat = F.normalize(self.text_proj(text_output.last_hidden_state[:,0,:]),dim=-1)    
+            
+            if not self.itc_sim:
+                return text_feat,image_feat
             
             sim = image_feat @ text_feat.t()
             return sim
